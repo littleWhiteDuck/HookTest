@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -115,11 +116,27 @@ public class MainActivity extends AppCompatActivity {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = clipboard.getPrimaryClip();
         String title = "Failure";
-        String message = "null";
-        if (clipData != null && clipData.getItemCount() > 0) {
-            ClipData.Item item = clipData.getItemAt(0);
+        StringBuilder message = new StringBuilder();
+        if (clipData != null) {
             title = "Success";
-            message = item.getText().toString();
+            for (int i = 0; i < clipData.getItemCount(); i++) {
+                CharSequence text = clipData.getItemAt(i).getText();
+                if (text == null) {
+                    Intent pasteIntent = clipboard.getPrimaryClip().getItemAt(i).getIntent();
+                    if (pasteIntent != null) {
+                        message.append(pasteIntent);
+                    } else {
+                        message.append(clipData.getItemAt(i).getUri());
+                    }
+                } else {
+                    message.append(text);
+                }
+                if (i != clipData.getItemCount()) {
+                    message.append("\n");
+                }
+            }
+        } else {
+            message.append("null");
         }
         new MaterialAlertDialogBuilder(this)
                 .setTitle(title)
