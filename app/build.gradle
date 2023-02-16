@@ -1,0 +1,71 @@
+plugins {
+    id 'com.android.application'
+}
+
+
+File keyFile = rootProject.file("sign.properties")
+Properties prop = new Properties()
+prop.load(new FileInputStream(keyFile))
+
+android {
+    compileSdk 33
+    signingConfigs {
+        mySign {
+            storeFile file(prop['file'])
+            storePassword prop['password']
+            keyAlias prop['alias']
+            keyPassword prop['keyPassword']
+        }
+    }
+    defaultConfig {
+        resConfigs 'zh_CN,en'
+        applicationId "me.duck.hooktest"
+        minSdk 21
+        targetSdk 33
+        versionCode 5
+        versionName "1.5"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            release {
+                minifyEnabled true
+                shrinkResources true
+                zipAlignEnabled true
+                signingConfig signingConfigs.mySign
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+        }
+        debug {
+            versionNameSuffix new Random().nextInt(1000).toString()
+            signingConfig signingConfigs.mySign
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+        }
+    }
+    namespace 'me.duck.hooktest'
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "HookTest_v$versionName-${versionCode}.apk"
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'com.google.android.material:material:1.8.0'
+    testImplementation 'junit:junit:'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}

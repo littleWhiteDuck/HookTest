@@ -1,0 +1,6 @@
+/.idea/
+/app/src/androidTest/
+/sign.properties
+/app/build/
+/.gradle/
+/app/src/test/

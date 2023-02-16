@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HookTest</string>
+    <string name="main_test_return">Return value test: %s</string>
+    <string name="main_test_break">Break test: %s</string>
+    <string name="main_test_params_hook">Change parameter value test: first parameter (default 0): %d, second parameter (default false): %b, third parameter (default ""): %s</string>
+    <string name="main_test_instance_field">Instance field value test: first field (default 0): %d, second field (default false): %b</string>
+    <string name="main_test_static_field">Static field value test: first field (default 0): %d, second field (default false): %b</string>
+    <string name="main_test_show_toast">Toast test</string>
+    <string name="main_test_show_dialog">show dialog</string>
+    <string name="main_test_show_super_dialog">Enhanced dialog</string>
+    <string name="main_test_popup_window_one">PopupWindow</string>
+    <string name="main_test_popup_window_two">PopupWindow2</string>
+    <string name="main_popup_title">title test</string>
+    <string name="main_popup_cancel">Cancel</string>
+    <string name="main_popup_confirm">Confirm</string>
+    <string name="main_toast_tip">Toast test</string>
+    <string name="main_dialog_title">Dialog test</string>
+    <string name="main_dialog_message">Here is the content of the dialog, which cannot be canceled by pressing the back key, click the blank space outside the dialog to cancel, click the button to cancel</string>
+    <string name="main_dialog_confirm">Confirm</string>
+    <string name="main_dialog_cancel">Cancel</string>
+    <string name="main_super_dialog_title">Enhanced test</string>
+    <string name="main_super_dialog_message">Here is the content of the dialog. The dialog cannot be canceled by pressing the back key, or by clicking the blank space outside the dialog. You can click the left button to cancel</string>
+    <string name="main_super_dialog_confirm">OK</string>
+    <string name="main_super_dialog_cancel">Cancel</string>
+    <string name="main_super_dialog_cancel_plus">Click here to cancel</string>
+    <string name="main_menu_copy_config">Copy the test configuration</string>
+    <string name="main_test_primitive_type">"Primitive type test: "</string>
+    <string name="main_test_boxed_primitive_type">Boxed primitive type test</string>
+    <string name="main_not_break_text">not break</string>
+    <string name="main_break_text">break success</string>
+    <string name="main_default_return_value">defaultValue</string>
+    <string name="main_write_text_to_clipboard">write to clipboard</string>
+    <string name="main_read_text_from_clipboard">Read the clipboard</string>
+    <string name="main_dialog_title_input_text_for_clip">Enter the text to be written to the clipboard</string>
+</resources>

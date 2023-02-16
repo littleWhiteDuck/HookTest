@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">HookTest</string>
+    <string name="main_test_return">返回值测试：%s</string>
+    <string name="main_test_break">中断测试：%s</string>
+    <string name="main_test_params_hook">更改参数值测试：第一个参数(默认0)：%d，第二个参数(默认false)：%b，第三个参数(默认"")：%s</string>
+    <string name="main_test_instance_field">实例变量值测试：第一个变量(默认0)：%d，第二个变量(默认false)：%b</string>
+    <string name="main_test_static_field">静态变量值测试：第一个变量(默认0)：%d，第二个变量(默认false)：%b</string>
+    <string name="main_test_show_toast">Toast测试</string>
+    <string name="main_test_show_dialog">弹窗显示</string>
+    <string name="main_test_show_super_dialog">加强版弹窗</string>
+    <string name="main_test_popup_window_one">PopupWindow第一种</string>
+    <string name="main_test_popup_window_two">PopupWindow第二种</string>
+    <string name="main_popup_title">标题测试</string>
+    <string name="main_popup_content" translatable="false">Aenean ex felis, condimentum ut condimentum et, viverra nec metus. Vestibulum vitae vestibulum lorem. Etiam ut porta ex. Cras egestas cursus magna, in mattis eros imperdiet non. Phasellus sapien diam, condimentum a lacus sed, fringilla congue lectus. Cras pretium lacinia enim, a eleifend est volutpat eget. Mauris mauris eros, convallis sit amet nisi vitae, vulputate ornare libero.</string>
+    <string name="main_popup_cancel">取消</string>
+    <string name="main_popup_confirm">确认</string>
+    <string name="main_toast_tip">Toast测试</string>
+    <string name="main_dialog_title">Dialog测试</string>
+    <string name="main_dialog_message">这里是弹窗内容,不可返回取消、弹窗外取消，点击按钮取消</string>
+    <string name="main_dialog_confirm">确认</string>
+    <string name="main_dialog_cancel">取消</string>
+    <string name="main_super_dialog_title">加强版测试</string>
+    <string name="main_super_dialog_message">这里是弹窗内容,弹窗不可返回取消、弹窗外取消。可以点击最左侧按钮取消</string>
+    <string name="main_super_dialog_confirm">确认</string>
+    <string name="main_super_dialog_cancel">取消</string>
+    <string name="main_super_dialog_cancel_plus">点此取消</string>
+    <string name="main_menu_copy_config">复制测试配置</string>
+    <string name="main_test_primitive_type">基本类型测试: </string>
+    <string name="main_test_boxed_primitive_type">包装类型测试: </string>
+    <string name="main_not_break_text">未中断执行</string>
+    <string name="main_break_text">中断执行了</string>
+    <string name="main_default_return_value">默认的返回值</string>
+    <string name="main_write_text_to_clipboard">写入剪贴板</string>
+    <string name="main_read_text_from_clipboard">读取剪贴板</string>
+    <string name="main_dialog_title_input_text_for_clip">输入要写入剪贴板的文字</string>
+</resources>

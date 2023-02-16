@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:fitsSystemWindows="true"
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="30dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_returnTest"
+                style="?attr/textAppearanceListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/main_test_return" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_breakTest"
+                style="?attr/textAppearanceListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/main_test_return" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_paramsTest"
+                style="?attr/textAppearanceListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/main_test_params_hook" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_instanceField"
+                style="?attr/textAppearanceListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/main_test_instance_field" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_staticField"
+                style="?attr/textAppearanceListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/main_test_instance_field" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_primitive_type"
+                style="?attr/textAppearanceListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/main_test_primitive_type" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_boxed_primitive_type"
+                style="?attr/textAppearanceListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/main_test_boxed_primitive_type" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/bt_showToast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_test_show_toast" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_showDialog"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:text="@string/main_test_show_dialog" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_showSuperDialog"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_test_show_super_dialog" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_read_clipboard"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:text="@string/main_read_text_from_clipboard" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_write_clipboard"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:text="@string/main_write_text_to_clipboard" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_popup1"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_test_popup_window_one" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_popup2"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_test_popup_window_two" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
