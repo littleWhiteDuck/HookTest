@@ -6,7 +6,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -88,10 +87,6 @@ public class MainActivity extends AppCompatActivity {
         isGood = false;
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(languageUtil.attachBaseContext(newBase));
-    }
 
     @SuppressLint("SetTextI18n")
     private void initView() {
