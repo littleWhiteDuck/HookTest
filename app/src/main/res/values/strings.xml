@@ -33,4 +33,11 @@
     <string name="main_write_text_to_clipboard">写入剪贴板</string>
     <string name="main_read_text_from_clipboard">读取剪贴板</string>
     <string name="main_dialog_title_input_text_for_clip">输入要写入剪贴板的文字</string>
+    <string name="main_read_assets_text">讀取Assets文件</string>
+    <string name="main_create_file">創建文件</string>
+    <string name="main_delete_file">刪除文件</string>
+    <string name="main_read_file">讀取文件</string>
+    <string name="main_write_file">寫出文件</string>
+    <string name="main_copy_config_tip">配置已復制，請在SimpleHook中導入</string>
+    <string name="input_hint">输入文字</string>
 </resources>

@@ -86,56 +86,96 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/main_test_boxed_primitive_type" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            >
+            <androidx.constraintlayout.helper.widget.Flow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="bt_showToast,bt_showDialog,bt_showSuperDialog,bt_readAssets,bt_createFile,bt_deleteFile,bt_writeFile,bt_readFile,bt_read_clipboard,bt_write_clipboard,bt_popup1,bt_popup2"
+                app:flow_horizontalBias="0"
+                app:flow_horizontalGap="5dp"
+                app:flow_horizontalStyle="packed"
+                app:flow_wrapMode="chain"
+                />
 
             <com.google.android.material.button.MaterialButton
-                android:layout_gravity="center_horizontal"
                 android:id="@+id/bt_showToast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/main_test_show_toast" />
+                android:text="@string/main_test_show_toast"
+                />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bt_showDialog"
                 android:layout_width="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:text="@string/main_test_show_dialog" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bt_showSuperDialog"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/main_test_show_super_dialog" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_readAssets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_read_assets_text" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_createFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_create_file" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_deleteFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_delete_file" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_readFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_read_file" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_writeFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_write_file" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bt_read_clipboard"
                 android:layout_width="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:text="@string/main_read_text_from_clipboard" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bt_write_clipboard"
                 android:layout_width="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:text="@string/main_write_text_to_clipboard" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bt_popup1"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/main_test_popup_window_one" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bt_popup2"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/main_test_popup_window_two" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
