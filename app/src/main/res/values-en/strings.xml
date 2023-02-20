@@ -33,4 +33,11 @@
     <string name="main_write_text_to_clipboard">write to clipboard</string>
     <string name="main_read_text_from_clipboard">Read the clipboard</string>
     <string name="main_dialog_title_input_text_for_clip">Enter the text to be written to the clipboard</string>
+    <string name="main_read_assets_text">读取Assets文件</string>
+    <string name="main_create_file">创建文件</string>
+    <string name="main_delete_file">删除文件</string>
+    <string name="main_read_file">读取文件</string>
+    <string name="main_write_file">写出文件</string>
+    <string name="main_copy_config_tip">配置已复制，请在SimpleHook中导入</string>
+    <string name="input_hint">input text</string>
 </resources>

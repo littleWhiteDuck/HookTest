@@ -24,33 +24,63 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.util.UUID;
 
 import me.duck.hooktest.bean.UseBean;
+import me.duck.hooktest.databinding.ActivityMainBinding;
 import me.duck.hooktest.view.PopupView;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class MainActivity extends AppCompatActivity {
 
     private static final String config = "{\"packageName\":\"me.duck.hooktest\",\"appName\":\"HookTest\",\"versionName\":\"1.4\",\"description\":\"\",\"configs\":\"[{\\\"mode\\\":1,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"alterParams\\\",\\\"params\\\":\\\"I,Z,java.lang.String\\\",\\\"resultValues\\\":\\\"10,,参数\\\"},{\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"getReturnValue\\\",\\\"resultValues\\\":\\\"测更更更试了返t回\\\"},{\\\"mode\\\":2,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"breakPerform\\\"},{\\\"mode\\\":1,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"getPrimitiveString\\\",\\\"params\\\":\\\"B,C,S,I,J,F,D,Z\\\",\\\"resultValues\\\":\\\"2b,2c,2short,2,2L,2f,2d,false\\\"},{\\\"mode\\\":3,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"changeStaticFields\\\",\\\"fieldName\\\":\\\"isGood\\\",\\\"fieldClassName\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"resultValues\\\":\\\"true\\\"},{\\\"mode\\\":4,\\\"className\\\":\\\"me.duck.hooktest.bean.UseBean\\\",\\\"methodName\\\":\\\"<init>\\\",\\\"params\\\":\\\"Z,I\\\",\\\"fieldName\\\":\\\"isHook\\\",\\\"resultValues\\\":\\\"true\\\"},{\\\"mode\\\":4,\\\"className\\\":\\\"me.duck.hooktest.bean.UseBean\\\",\\\"methodName\\\":\\\"<init>\\\",\\\"params\\\":\\\"Z,I\\\",\\\"fieldName\\\":\\\"level\\\",\\\"resultValues\\\":\\\"188888\\\"},{\\\"mode\\\":3,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"changeStaticFields\\\",\\\"fieldName\\\":\\\"scores\\\",\\\"fieldClassName\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"resultValues\\\":\\\"10000\\\"}]\",\"id\":170}\n";
-    private MaterialTextView tv_breakTest;
     private static int scores = 0;
     private static boolean isGood = false;
     private UseBean useBean;
+    private String cachePath;
+
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         MaterialToolbar materialToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(materialToolbar);
         new WindowPreferencesManager().applyEdgeToEdgePreference(getWindow());
         useBean = new UseBean(false, 0);
         changeStaticFields();
         initView();
+        String path = getExternalFilesDir(null).getPath();
+        cachePath = path + "/cache";
+        new Thread(this::deleteCache).start();
+    }
+
+    private void deleteCache() {
+        File cacheFile = new File(cachePath);
+        if (cacheFile.exists()) {
+            File[] files = cacheFile.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    file.delete();
+                }
+            }
+        } else {
+            cacheFile.mkdir();
+        }
     }
 
     private void changeStaticFields() {
@@ -65,37 +95,90 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void initView() {
-        MaterialTextView tv_returnTest = findViewById(R.id.tv_returnTest);
-        tv_returnTest.setText(getString(R.string.main_test_return, getReturnValue()));
-        tv_breakTest = findViewById(R.id.tv_breakTest);
-        tv_breakTest.setText(getString(R.string.main_test_break, getString(R.string.main_break_text)));
+        binding.tvReturnTest.setText(getString(R.string.main_test_return, getReturnValue()));
+        binding.tvBreakTest.setText(getString(R.string.main_test_break, getString(R.string.main_break_text)));
         breakPerform();
         alterParams(0, false, "");
-        MaterialTextView tv_instanceField = findViewById(R.id.tv_instanceField);
-        tv_instanceField.setText(getString(R.string.main_test_instance_field, useBean.getLevel(), useBean.isHook()));
-        MaterialTextView tv_staticField = findViewById(R.id.tv_staticField);
-        tv_staticField.setText(getString(R.string.main_test_static_field, scores, isGood));
-        MaterialTextView tv_primitive = findViewById(R.id.tv_primitive_type);
+        binding.tvInstanceField.setText(getString(R.string.main_test_instance_field, useBean.getLevel(), useBean.isHook()));
+        binding.tvStaticField.setText(getString(R.string.main_test_static_field, scores, isGood));
         byte byteTest = 1;
         short shortTest = 1;
-        tv_primitive.setText(getString(R.string.main_test_primitive_type) + getPrimitiveString(byteTest, 'A', shortTest, 1, 1L, 1f, 1d, true));
-        MaterialTextView tv_boxed_primitive = findViewById(R.id.tv_boxed_primitive_type);
-        tv_boxed_primitive.setText(getString(R.string.main_test_boxed_primitive_type) + getBoxedPrimitiveString(Byte.valueOf("1"), 'A', Short.valueOf("1"),
+        binding.tvPrimitiveType.setText(getString(R.string.main_test_primitive_type) + getPrimitiveString(byteTest, 'A', shortTest, 1, 1L, 1f, 1d, true));
+        binding.tvBoxedPrimitiveType.setText(getString(R.string.main_test_boxed_primitive_type) + getBoxedPrimitiveString(Byte.valueOf("1"), 'A', Short.valueOf("1"),
                 Integer.valueOf("1"), Long.valueOf("1"), Float.valueOf("1"), Double.valueOf("1"), Boolean.valueOf("true")));
-        MaterialButton bt_showToast = findViewById(R.id.bt_showToast);
-        bt_showToast.setOnClickListener(view -> Toast.makeText(this, R.string.main_toast_tip, Toast.LENGTH_SHORT).show());
-        MaterialButton bt_showDialog = findViewById(R.id.bt_showDialog);
-        bt_showDialog.setOnClickListener(view -> showDialog());
-        MaterialButton bt_showSuperDialog = findViewById(R.id.bt_showSuperDialog);
-        bt_showSuperDialog.setOnClickListener(view -> showSuperDialog());
-        MaterialButton bt_popup1 = findViewById(R.id.bt_popup1);
-        bt_popup1.setOnClickListener(view -> showPopupWindow(view, false));
-        MaterialButton bt_popup2 = findViewById(R.id.bt_popup2);
-        bt_popup2.setOnClickListener(view -> showPopupWindow(view, true));
-        MaterialButton readClipboardButton = findViewById(R.id.bt_read_clipboard);
-        readClipboardButton.setOnClickListener(view -> readClipboard());
-        MaterialButton writeClipboardButton = findViewById(R.id.bt_write_clipboard);
-        writeClipboardButton.setOnClickListener(View -> showPutClipDialog());
+        binding.btShowToast.setOnClickListener(view -> Toast.makeText(this, R.string.main_toast_tip, Toast.LENGTH_SHORT).show());
+        binding.btShowDialog.setOnClickListener(view -> showDialog());
+        binding.btShowSuperDialog.setOnClickListener(view -> showSuperDialog());
+        binding.btPopup1.setOnClickListener(view -> showPopupWindow(view, false));
+        binding.btPopup2.setOnClickListener(view -> showPopupWindow(view, true));
+        binding.btReadClipboard.setOnClickListener(view -> readClipboard());
+        binding.btWriteClipboard.setOnClickListener(View -> showPutClipDialog());
+        binding.btReadAssets.setOnClickListener(v -> readAssetsText());
+        binding.btCreateFile.setOnClickListener(v -> createFile());
+        binding.btDeleteFile.setOnClickListener(v -> deleteFile());
+        binding.btWriteFile.setOnClickListener(v -> writeText());
+        binding.btReadFile.setOnClickListener(v -> readText());
+    }
+
+    private void deleteFile() {
+        File cacheFile = new File(cachePath + "/" + UUID.randomUUID().toString());
+        // fake delete
+        cacheFile.delete();
+        showMessageDialog("Success", cacheFile.getPath());
+    }
+
+    private void createFile() {
+        String title = "Failure";
+        File cacheFile = new File(cachePath + "/" + UUID.randomUUID().toString());
+        try {
+            boolean ok = cacheFile.createNewFile();
+            if (ok) {
+                title = "Success";
+            }
+        } catch (IOException ignored) {
+        }
+        showMessageDialog(title, cacheFile.getPath());
+    }
+
+    @SuppressWarnings("IOStreamConstructor")
+    private void readText() {
+        String fileName = UUID.randomUUID().toString();
+        File cacheFile = new File(cachePath + "/" + fileName);
+        String message;
+        String title = "Success";
+        try {
+            cacheFile.createNewFile();
+            writeText(cacheFile);
+            message = readTextFromStream(new FileInputStream(cacheFile));
+        } catch (IOException e) {
+            message = "null";
+            title = "Failure";
+        }
+        showMessageDialog(title, message + "\n" + cacheFile.getPath());
+    }
+
+    private void writeText() {
+        String fileName = UUID.randomUUID().toString();
+        File cacheFile = new File(cachePath + "/" + fileName);
+        String title = "Failure";
+        try {
+            cacheFile.createNewFile();
+            if (writeText(cacheFile)) {
+                title = "Success";
+            }
+        } catch (IOException ignored) {
+        }
+        showMessageDialog(title, cacheFile.getPath());
+    }
+
+    private void readAssetsText() {
+        String result;
+        try {
+            result = readTextFromStream(getAssets().open("test"));
+        } catch (IOException e) {
+            result = "error";
+        }
+        showMessageDialog("读取Assets文件", result);
     }
 
     private void showPutClipDialog() {
@@ -138,6 +221,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             message.append("null");
         }
+        showMessageDialog(title, message.toString());
+    }
+
+    private void showMessageDialog(String title, String message) {
         new MaterialAlertDialogBuilder(this)
                 .setTitle(title)
                 .setMessage(message)
@@ -220,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void breakPerform() {
-        tv_breakTest.setText(getString(R.string.main_test_break, getString(R.string.main_not_break_text)));
+        binding.tvBreakTest.setText(getString(R.string.main_test_break, getString(R.string.main_not_break_text)));
     }
 
     private String getReturnValue() {
@@ -231,9 +318,7 @@ public class MainActivity extends AppCompatActivity {
     private void toClip(String text) {
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         clipboardManager.setPrimaryClip(ClipData.newPlainText("label", text));
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
-            Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(this, R.string.main_copy_config_tip, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -250,5 +335,31 @@ public class MainActivity extends AppCompatActivity {
             toClip(config);
         }
         return true;
+    }
+
+    private String readTextFromStream(InputStream inputStream) {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        try {
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            bufferedReader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return stringBuilder.toString();
+    }
+
+    private boolean writeText(File file) {
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+            bufferedWriter.write("Test Test Test");
+            bufferedWriter.close();
+            return true;
+        } catch (IOException ignored) {
+            return false;
+        }
     }
 }
