@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Process;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Menu;
@@ -113,6 +114,29 @@ public class MainActivity extends AppCompatActivity {
         binding.btDeleteFile.setOnClickListener(v -> deleteFile());
         binding.btWriteFile.setOnClickListener(v -> writeText());
         binding.btReadFile.setOnClickListener(v -> readText());
+        binding.btExit.setOnClickListener(v -> exitApp());
+    }
+
+    private void exitApp() {
+        CharSequence[] items = getResources().getStringArray(R.array.exit_app_items);
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.main_exit_app)
+                .setSingleChoiceItems(items, -1, (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            finish();
+                            break;
+                        case 1:
+                            System.exit(0);
+                            break;
+                        case 2:
+                            Process.killProcess(Process.myPid());
+                            break;
+                        case 3:
+                            throw new NullPointerException(getString(R.string.main_test_crash));
+                    }
+                })
+                .show();
     }
 
     private void deleteFile() {

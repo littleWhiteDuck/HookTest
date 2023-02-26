@@ -40,4 +40,12 @@
     <string name="main_write_file">write file</string>
     <string name="main_copy_config_tip">The configuration has been copied, please import it in SimpleHook</string>
     <string name="input_hint">input text</string>
+    <string name="main_exit_app">Exit app</string>
+    <string name="main_test_crash">Test Crash</string>
+    <array name="exit_app_items">
+        <item>Finish()</item>
+        <item>System.exit()</item>
+        <item>killProcess()</item>
+        <item>Exception(Crash)</item>
+    </array>
 </resources>

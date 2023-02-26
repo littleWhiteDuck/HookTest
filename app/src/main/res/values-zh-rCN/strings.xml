@@ -39,4 +39,6 @@
     <string name="main_write_file">写出文件</string>
     <string name="main_copy_config_tip">配置已复制，请在SimpleHook中导入</string>
     <string name="input_hint">输入文字</string>
+    <string name="main_exit_app">退出应用</string>
+    <string name="main_test_crash">测试闪退</string>
 </resources>

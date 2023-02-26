@@ -94,7 +94,7 @@
             <androidx.constraintlayout.helper.widget.Flow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="bt_showToast,bt_showDialog,bt_showSuperDialog,bt_readAssets,bt_createFile,bt_deleteFile,bt_writeFile,bt_readFile,bt_read_clipboard,bt_write_clipboard,bt_popup1,bt_popup2"
+                app:constraint_referenced_ids="bt_showToast,bt_showDialog,bt_showSuperDialog,bt_readAssets,bt_createFile,bt_deleteFile,bt_writeFile,bt_readFile,bt_read_clipboard,bt_write_clipboard,bt_popup1,bt_popup2,bt_exit"
                 app:flow_horizontalBias="0"
                 app:flow_horizontalGap="5dp"
                 app:flow_horizontalStyle="packed"
@@ -173,6 +173,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/main_test_popup_window_two" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_exit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_exit_app" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
