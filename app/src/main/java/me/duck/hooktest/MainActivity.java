@@ -134,6 +134,11 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case 3:
                             throw new NullPointerException(getString(R.string.main_test_crash));
+                        case 4:
+                            new Thread(() -> {
+                                throw new NullPointerException(getString(R.string.main_test_crash));
+                            }).start();
+                            break;
                     }
                 })
                 .show();

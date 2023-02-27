@@ -46,6 +46,7 @@
         <item>Finish()</item>
         <item>System.exit()</item>
         <item>killProcess()</item>
-        <item>Exception(Crash)</item>
+        <item>Crash(Main thread)</item>
+        <item>Crash(Child thread)</item>
     </array>
 </resources>
