@@ -42,6 +42,7 @@
     <string name="input_hint">input text</string>
     <string name="main_exit_app">Exit app</string>
     <string name="main_test_crash">Test Crash</string>
+    <string name="main_read_assets_file">Read Assets file</string>
     <array name="exit_app_items">
         <item>Finish()</item>
         <item>System.exit()</item>

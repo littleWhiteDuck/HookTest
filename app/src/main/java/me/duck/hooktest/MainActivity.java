@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             result = "error";
         }
-        showMessageDialog("读取Assets文件", result);
+        showMessageDialog(getString(R.string.main_read_assets_file), result);
     }
 
     private void showPutClipDialog() {
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.main_dialog_confirm, (dialog, which) -> {
                     EditText editText = ((AlertDialog) dialog).findViewById(R.id.text_input_edit);
                     //noinspection ConstantConditions
-                    toClip(editText.getText().toString().trim());
+                    toClip(editText.getText().toString().trim(), "Copied!!!");
                 })
                 .setNegativeButton(getString(R.string.main_dialog_cancel), null)
                 .show();
@@ -339,10 +339,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("WrongConstant")
-    private void toClip(String text) {
+    private void toClip(String text, String tip) {
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         clipboardManager.setPrimaryClip(ClipData.newPlainText("label", text));
-        Toast.makeText(this, R.string.main_copy_config_tip, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -356,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_copy) {
-            toClip(config);
+            toClip(config, getString(R.string.main_copy_config_tip));
         }
         return true;
     }
