@@ -42,4 +42,5 @@
     <string name="main_exit_app">退出应用</string>
     <string name="main_test_crash">测试闪退</string>
     <string name="main_read_assets_file">读取Assets文件</string>
+    <string name="main_get_system_info">获取系统信息</string>
 </resources>

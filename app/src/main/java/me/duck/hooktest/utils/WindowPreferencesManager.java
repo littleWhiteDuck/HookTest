@@ -1,4 +1,4 @@
-package me.duck.hooktest;
+package me.duck.hooktest.utils;
 
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;

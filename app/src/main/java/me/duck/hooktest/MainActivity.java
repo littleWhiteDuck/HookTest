@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.util.DisplayMetrics;
@@ -38,20 +39,47 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.UUID;
 
+import me.duck.hooktest.bean.TestGson;
 import me.duck.hooktest.bean.UseBean;
 import me.duck.hooktest.databinding.ActivityMainBinding;
+import me.duck.hooktest.utils.ShellUtils;
+import me.duck.hooktest.utils.WindowPreferencesManager;
 import me.duck.hooktest.view.PopupView;
+
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class MainActivity extends AppCompatActivity {
 
-    private static final String config = "{\"packageName\":\"me.duck.hooktest\",\"appName\":\"HookTest\",\"versionName\":\"1.4\",\"description\":\"\",\"configs\":\"[{\\\"mode\\\":1,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"alterParams\\\",\\\"params\\\":\\\"I,Z,java.lang.String\\\",\\\"resultValues\\\":\\\"10,,参数\\\"},{\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"getReturnValue\\\",\\\"resultValues\\\":\\\"测更更更试了返t回\\\"},{\\\"mode\\\":2,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"breakPerform\\\"},{\\\"mode\\\":1,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"getPrimitiveString\\\",\\\"params\\\":\\\"B,C,S,I,J,F,D,Z\\\",\\\"resultValues\\\":\\\"2b,2c,2short,2,2L,2f,2d,false\\\"},{\\\"mode\\\":3,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"changeStaticFields\\\",\\\"fieldName\\\":\\\"isGood\\\",\\\"fieldClassName\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"resultValues\\\":\\\"true\\\"},{\\\"mode\\\":4,\\\"className\\\":\\\"me.duck.hooktest.bean.UseBean\\\",\\\"methodName\\\":\\\"<init>\\\",\\\"params\\\":\\\"Z,I\\\",\\\"fieldName\\\":\\\"isHook\\\",\\\"resultValues\\\":\\\"true\\\"},{\\\"mode\\\":4,\\\"className\\\":\\\"me.duck.hooktest.bean.UseBean\\\",\\\"methodName\\\":\\\"<init>\\\",\\\"params\\\":\\\"Z,I\\\",\\\"fieldName\\\":\\\"level\\\",\\\"resultValues\\\":\\\"188888\\\"},{\\\"mode\\\":3,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"changeStaticFields\\\",\\\"fieldName\\\":\\\"scores\\\",\\\"fieldClassName\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"resultValues\\\":\\\"10000\\\"}]\",\"id\":170}\n";
+    private static final String config = "{\"packageName\":\"me.duck.hooktest\",\"appName\":\"HookTest\",\"versionName\":\"1.4\",\"description\":\"\",\"configs\":\"[{\\\"mode\\\":1,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"alterParams\\\",\\\"params\\\":\\\"I,Z,java.lang.String\\\",\\\"resultValues\\\":\\\"10,,参数\\\"},{\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"getReturnValue\\\",\\\"resultValues\\\":\\\"测更更更试了返t回\\\"},{\\\"mode\\\":2,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"breakPerform\\\"},{\\\"mode\\\":1,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"getPrimitiveString\\\",\\\"params\\\":\\\"B,C,S,I,J,F,D,Z\\\",\\\"resultValues\\\":\\\"2b,2c,2short,2,2L,2f,2d,false\\\"},{\\\"mode\\\":3,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"changeStaticFields\\\",\\\"fieldName\\\":\\\"isGood\\\",\\\"fieldClassName\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"resultValues\\\":\\\"true\\\"},{\\\"mode\\\":4,\\\"className\\\":\\\"me.duck.hooktest.bean.UseBean\\\",\\\"methodName\\\":\\\"<init>\\\",\\\"params\\\":\\\"Z,I\\\",\\\"fieldName\\\":\\\"isHook\\\",\\\"resultValues\\\":\\\"true\\\"},{\\\"mode\\\":4,\\\"className\\\":\\\"me.duck.hooktest.bean.UseBean\\\",\\\"methodName\\\":\\\"<init>\\\",\\\"params\\\":\\\"Z,I\\\",\\\"fieldName\\\":\\\"level\\\",\\\"resultValues\\\":\\\"188888\\\"},{\\\"mode\\\":3,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"changeStaticFields\\\",\\\"fieldName\\\":\\\"scores\\\",\\\"fieldClassName\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"resultValues\\\":\\\"10000\\\"},{\\\"mode\\\":10,\\\"className\\\":\\\"me.duck.hooktest.MainActivity\\\",\\\"methodName\\\":\\\"testReturn2\\\",\\\"resultValues\\\":\\\"{\\\\\\\"testBoolean\\\\\\\":false,\\\\\\\"testInt\\\\\\\":666,\\\\\\\"testString\\\\\\\":\\\\\\\"test hook return+ success\\\\\\\"}\\\",\\\"hookPoint\\\":\\\"after\\\",\\\"returnClassName\\\":\\\"me.duck.hooktest.bean.TestGson\\\"}]\",\"id\":0}\n";
     private static int scores = 0;
     private static boolean isGood = false;
     private UseBean useBean;
     private String cachePath;
 
     private ActivityMainBinding binding;
+
+    private static final String KEY_NEW_LINE_CHAR = "\n";
+
+    private static final String[] props = new String[]{
+            "getprop ro.build.id",
+            "getprop ro.build.display.id",
+            "getprop ro.product.name",
+            "getprop ro.product.device",
+            "getprop ro.product.board",
+            "getprop ro.product.manufacturer",
+            "getprop ro.product.brand",
+            "getprop ro.product.model"
+    };
+    private static final String[] propNames = new String[]{
+            "ID",
+            "DISPLAY",
+            "PRODUCT",
+            "DEVICE",
+            "BOARD",
+            "MANUFACTURER",
+            "BRAND",
+            "MODEL",
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +116,10 @@ public class MainActivity extends AppCompatActivity {
         isGood = false;
     }
 
+    private TestGson testReturn2() {
+        return new TestGson(999, true, "test hook return+ by gson");
+    }
+
 
     @SuppressLint("SetTextI18n")
     private void initView() {
@@ -115,7 +147,37 @@ public class MainActivity extends AppCompatActivity {
         binding.btWriteFile.setOnClickListener(v -> writeText());
         binding.btReadFile.setOnClickListener(v -> readText());
         binding.btExit.setOnClickListener(v -> exitApp());
+        binding.btGetSystemInfo.setOnClickListener(v -> showGetSystemInfoDialog());
+        TestGson testGson = testReturn2();
+        binding.tvTestReturn2.setText("testInt: " + testGson.getTestInt() + "\ntestBoolean: " + testGson.isTestBoolean() + "\ntestString: " + testGson.getTestString());
     }
+
+
+    private void showGetSystemInfoDialog() {
+        StringBuilder stringBuilder = new StringBuilder();
+        String propValue;
+        for (String propName : propNames) {
+            try {
+                Field field = Build.class.getField(propName);
+                propValue = (String) field.get(null);
+            } catch (Exception ignored) {
+                propValue = "unknown";
+            }
+            stringBuilder.append(propName).append(": ").append(propValue).append(KEY_NEW_LINE_CHAR);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            stringBuilder.append("SOC_MANUFACTURER: ").append(Build.SOC_MANUFACTURER).append(KEY_NEW_LINE_CHAR);
+            stringBuilder.append("SOC_MODEL: ").append(Build.SOC_MODEL).append(KEY_NEW_LINE_CHAR);
+        }
+        stringBuilder.append("===============").append(KEY_NEW_LINE_CHAR);
+        String[] results = ShellUtils.execCmd(props).split(KEY_NEW_LINE_CHAR);
+        // maybe error
+        for (int i = 0; i < results.length; i++) {
+            stringBuilder.append(propNames[i]).append(": ").append(results[i]).append(KEY_NEW_LINE_CHAR);
+        }
+        showMessageDialog(getString(R.string.main_get_system_info), stringBuilder.toString());
+    }
+
 
     private void exitApp() {
         CharSequence[] items = getResources().getStringArray(R.array.exit_app_items);
