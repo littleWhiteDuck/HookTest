@@ -29,6 +29,7 @@
     private static int scores;
     private static boolean isGood;
     private me.duck.hooktest.bean.UseBean useBean;
+    private me.duck.hooktest.bean.TestGson testReturn2();
  }
  -keep class me.duck.hooktest.bean.UseBean
 
